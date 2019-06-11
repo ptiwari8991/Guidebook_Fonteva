@@ -1,0 +1,126 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="GuidebookApiController"  >
+    
+    <!-- Handler Start-->
+    <!--<aura:handler event="force:refreshView" action="{!c.doInit}"/> -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <!--aura:handler event="aura:waiting" action="{!c.waiting}"/ --> 
+    <!--aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/--> 
+    <!--Handler End-->
+    
+    <!-- component attributs Start-->
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="guideId" type="Decimal" />
+    <aura:attribute name="guideName" type="String" default="None Selected" />
+    <aura:attribute name="guideDescription" type="String" />
+    <aura:attribute name="startDatetime" type="datetime" />
+    <aura:attribute name="endDatetime" type="datetime" />
+    
+    <aura:attribute name="event" type="EventApi__Event__c" default="{ 'sobjectType': 'EventApi__Event__c' }" />
+    <aura:attribute name="checkGuide" type="boolean" default="false" />
+    <aura:attribute name="records" type="object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="isChecked" type="Boolean" default="false" />
+    <!-- component attributs End-->
+    
+    <article class="slds-card">
+  <div class="slds-card__header slds-grid">
+    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+        <span class="slds-icon_container" title="Events">
+         <lightning:icon iconName="standard:event" alternativeText="Event" />
+          <span class="slds-assistive-text">Events</span>
+        </span>
+      </div>
+      <div class="slds-media__body">
+        <h2 class="slds-card__header-title">
+            <b>Guide Name</b> : <span>{!v.guideName}</span>
+            
+          <!--a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Accounts"-->
+            <!--span><span class="slds-icon_container" title="Info">
+         <lightning:icon iconName="standard:info" alternativeText="Info" />
+          <span class="slds-assistive-text">Events</span>
+        </span>
+                Please select one of the guide from list and press sync button</span-->
+          <!--/a-->
+        </h2>
+      </div>
+    </header>
+  </div>
+</article>
+    <!--loading spinner start... style=Brand Medium (blue dots)-->
+           
+        <div class="demo-only hideProgress" id="divSpinner" aura:id="divSpinner">
+            <div class="slds-spinner_container slds-is-fixed">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </div>
+   
+    
+    <!-- Loading spinner end--> 
+    <!-- Component Fields Start-->
+    <aura:if isTrue="{!v.checkGuide}">
+        <!--div class="slds-form-element__control">
+<div class="slds-checkbox">
+    <input type="checkbox" name="default" id="checkbox-13" value="checkbox-13" checked="" />
+<label class="slds-checkbox__label" for="checkbox-13"><span class="slds-checkbox_faux"></span>
+    <span class="slds-form-element__label">Disable end user personalization</span>
+    </label>
+    </div>
+    <div class="slds-checkbox">
+        <input type="checkbox" name="default" id="checkbox-14" value="checkbox-14" />
+    <label class="slds-checkbox__label" for="checkbox-14">
+        <span class="slds-checkbox_faux"></span>
+        <span class="slds-form-element__label">Don't automatically create temporary tabs</span>
+    </label>
+    </div>
+    </div -->
+        
+        
+         <div class="slds-grid slds-wrap">
+             
+        <div class="slds-p-around_medium">
+            
+            <!--b>Guide Name</b> : <span>{!v.guideName}</span> <br/ -->   
+            <ui:outputCheckbox  aura:id="output" value="{!v.checkGuide}"/>&nbsp; <b>Already Synced</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="slds-float_right" >
+                <lightning:button class="slds-button slds-button--brand toggle"  variant="brand"
+                           label="Fonteva Mobile Integration Sync" onclick="{!c.updateGuide}" aura:id="submit"/><br/><br/></div>
+            <lightning:input  type="checkbox"  label="Sync With New Guide"  onchange="{!c.toggleGuidebook}" aura:id="chkGuide" checked="{!v.isChecked}"/><br/>
+            <!-- Component Fields End-->
+        </div>
+        </div>
+    </aura:if> 
+    <aura:renderIf isTrue="{!v.records}" >
+        <!-- Lightning DataTable Start-->
+         <div class="slds-grid slds-wrap slds-gutters slds-m-top_small" id="divGuideRecords">
+             <span> <lightning:helptext
+        content="Please select one of the guide from list and press sync button."  />
+                 Please select one of the guide from list and press sync button.
+                </span>
+        <div class="slds-scrollable_y" style="height:250px;">
+            <lightning:datatable
+                                 keyField="id"
+                                 data="{!v.records }"
+                                 columns="{!v.columns}" onrowselection="{!c.getSelectedName}" maxRowSelection="1"            
+                                 />
+        </div>
+        <!-- Lightning DataTable End--> 
+        </div>        
+        <!-- Modal Footer Start <br/><br/><br/><br/><br/><br/><br/> -->
+        <div class="slds-grid slds-gutters slds-m-top_small">
+            <div class="slds-col_bump-right"><span></span>  </div>
+            <div >
+                <lightning:button variant="brand" label="Sync" onclick="{!c.syncData}" aura:id="btnGuideSync" disabled="true" /> 
+                <lightning:button variant="brand" label="Cancel" onclick="{!c.cancelPopUp}" />                
+            </div>
+        </div>
+    </aura:renderIf>
+    <!-- Modal Footer End -->
+   
+    
+</aura:component>

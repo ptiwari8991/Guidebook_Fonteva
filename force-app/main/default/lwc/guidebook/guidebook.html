@@ -1,0 +1,26 @@
+<template>
+    <div class="slds-m-top_medium slds-m-bottom_x-large">
+        <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+          <p>{recordId}</p>
+        </h2>
+        <ui:outputCheckbox >&nbsp; <b>Already Synced</b></ui:outputCheckbox>
+        <lightning-checkbox-group name="checkbox" label="checkbox"></lightning-checkbox-group>
+        <!-- Simple -->
+        <div class="slds-p-around_medium lgc-bg" style="height: 300px;">
+            <lightning-datatable
+                key-field="id"
+                data={data}
+                columns={columns}
+                max-row-selection="1"
+                onrowselection={getSelectedName}
+                >
+            </lightning-datatable>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutters slds-m-top_small">
+		<div class="slds-col_bump-right"><span></span>  </div>
+		<div >
+		 <lightning-button variant="brand" label="Sync"  onclick={syncData} ></lightning-button>            
+		</div>
+	</div>
+</template>

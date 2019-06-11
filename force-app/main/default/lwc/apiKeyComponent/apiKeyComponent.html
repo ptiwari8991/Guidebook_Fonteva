@@ -1,0 +1,13 @@
+<template>
+    
+    <div class="slds-text-align_center"><b>Guidebook Api Key</b></div>
+    <lightning-helptext content="This Api Key will be use when syncing with GuideBook"></lightning-helptext>
+    <lightning-textarea class ="inputCmp" name="apiKey" value={data}></lightning-textarea></br>
+        <div class="slds-text-align_center">
+            <lightning-button 
+                variant="brand" 
+                label="Save" 
+                onclick={handleClick}>
+            </lightning-button>
+        </div>
+</template>

@@ -1,0 +1,24 @@
+/*toggleCss.css*/
+.THIS .toggle {
+    display: none;
+}
+
+.THIS .name {
+    display: none;
+}
+
+.THIS .hide {
+    display: none !important;
+}
+
+.THIS .show {
+    display: block !important;
+}
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+
+.THIS #divGuideRecords .slds-radio{
+    cursor:pointer !important;
+}
